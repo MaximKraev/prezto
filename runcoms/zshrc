@@ -4,10 +4,21 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+#autoload _ssh_hosts
+export PATH="/usr/local/opt/curl/bin:$PATH"
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
-
+source /usr/local/etc/grc.bashrc
 # Customize to your needs...
+#source ~/.iterm2_shell_integration.zsh
+#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# added by travis gem
+[ -f /Users/mkraev/.travis/travis.sh ] && source /Users/mkraev/.travis/travis.sh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/Cellar/terraform/0.11.8/bin/terraform terraform

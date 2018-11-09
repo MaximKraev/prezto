@@ -31,7 +31,7 @@ alias brewi='brew install'
 alias brewl='brew list'
 alias brewo='brew outdated'
 alias brews='brew search'
-alias brewu='brew upgrade'
+alias brewu='brew update && brew upgrade && brew cask upgrade'
 alias brewx='brew uninstall'
 
 # Homebrew Cask

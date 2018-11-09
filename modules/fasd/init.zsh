@@ -39,12 +39,27 @@ source "$cache_file"
 
 unset cache_file init_args
 
-function fasd_cd {
-  local fasd_ret="$(fasd -d "$@")"
-  if [[ -d "$fasd_ret" ]]; then
-    cd "$fasd_ret"
+# function fasd_cd {
+#   local fasd_ret="$(fasd -d "$@")"
+#   if [[ -d "$fasd_ret" ]]; then
+#     cd "$fasd_ret"
+#   else
+#     print "$fasd_ret"
+#   fi
+# }
+
+
+fasd_cd() {
+  if [ $# -lt 1 ]; then
+    fasd "$@"
   else
-    print "$fasd_ret"
+    local _fasd_ret=$(fasd -l -1 -d "$@")
+    local _pwd=$(pwd)
+    if [ "$_pwd" = "$_fasd_ret" ]; then
+      _fasd_ret=$(fasd -l -2 -d "$@")
+    fi
+    [ -z "$_fasd_ret" ] && return
+    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || printf %s "$_fasd_ret"
   fi
 }
 
@@ -53,4 +68,4 @@ function fasd_cd {
 #
 
 # Changes the current working directory interactively.
-alias j='fasd_cd -i'
+alias j='fasd_cd'
